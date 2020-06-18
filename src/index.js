@@ -11,31 +11,43 @@ class App extends React.Component {
     randomQuote: null
   };
 
-
   componentDidMount() {
     fetch(API)
       .then(res => res.json())
       .then(data => {
         this.setState({
-          quotes: data
+          quotes: data,
+          newVote: ""
         });
       });
-  }
-//   starHandler = () => {
-//     async componentDidMount() {
-//         // POST request using fetch with async/await
-//         const requestOptions = {
-//             method: 'POST',
-//             headers: { 'Content-Type': 'application/json' },
-//             body: JSON.stringify({ title: 'React POST Request Example' })
-//         };
-//         const response = await fetch('https://jsonplaceholder.typicode.com/posts', requestOptions);
-//         const data = await response.json();
-//         this.setState({ postId: data.id });
-//     }
-    
 
-//   }
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange({ target }) {
+    this.setState({
+      [target.name]: target.value
+    });
+  }
+
+  starHandler = async () => {
+    console.log("quote id", this.state.randomQuote._id);
+    console.log("vote number", this.state.newVote);
+    // POST request using fetch with async/await
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ quoteId: this.state.randomQuote._id, newVote: this.state.newVote })
+    };
+    const response = await fetch(API2, requestOptions);
+    const data = await response.json();
+    console.log("data", data);
+    this.setState({
+      newVote: ""
+    });
+    this.randomQuoteHandler();
+    //this.setState({ postId: data.id });
+  }
 
   randomQuoteHandler = () => {
     const randNumb = Math.floor(Math.random() * this.state.quotes.length);
@@ -45,6 +57,7 @@ class App extends React.Component {
       randomQuote
     });
   };
+
   render() {
     return (
       <div className="container">
@@ -63,7 +76,8 @@ class App extends React.Component {
             >
               Random Quotes
             </button>
-            <input type="text" name="text_01" id="text_01"></input>
+            <input type="text" name="newVote" id="newVote" value={ this.state.newVote } onChange={ this.handleChange } >
+            </input>
             <button
               className="ui black basic button"
               onClick={this.starHandler}
