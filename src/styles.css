@@ -10,11 +10,11 @@
   
   body {
     background: #3494e6; 
-    background: -webkit-linear-gradient(
+    /* background: -webkit-linear-gradient(
       to right,
       #ec6ead,
       #3494e6
-    ); 
+    );  */
     background: linear-gradient(
       to right,
       #ec6ead,
@@ -24,11 +24,11 @@
   
   .ui.card {
     background: #007991; 
-    background: -webkit-linear-gradient(
+    /* background: -webkit-linear-gradient(
       to right,
       #78ffd6,
       #007991
-    ); 
+    );  */
     background: linear-gradient(
       to right,
       #78ffd6,
